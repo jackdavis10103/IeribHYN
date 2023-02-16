@@ -1,7 +1,6 @@
 import json
 
 import pytest
-import whisper
 
 from src import app
 from src.main import redis_connection
@@ -24,8 +23,6 @@ def test_detect_options(client):
             "model": {
                 "type": "enum",
                 "options": whisper.available_models(),
-                "optional": True,
-                "default": "tiny",
             },
         }
     }
@@ -103,7 +100,6 @@ def test_transcribe_enqueue(client):
 
 
 def test_detect_language(client):
-    with open('tests/test.mp3', 'rb') as f:
         data = f.read()
 
     response = client.post('/v1/detect?model=tiny',
